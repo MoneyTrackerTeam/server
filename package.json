@@ -1,0 +1,22 @@
+{
+  "name": "money-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://haverhsem@bitbucket.org/haverhsem/moneytracker.git"
+  },
+  "author": "Viktor",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/haverhsem/moneytracker#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "pg": "^7.4.3",
+    "typeorm": "^0.2.7"
+  }
+}
