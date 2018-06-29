@@ -1,8 +1,8 @@
 import { Connection, createConnection } from "typeorm";
-import { Customer } from "../models/customer";
+import { UserEntity } from "../entities/user";
 
-export interface DatabaseConfiguration {
-    type: 'postgres';
+export interface IDatabaseConfiguration {
+    type: "postgres";
     host: string;
     port: number;
     username: string;
@@ -12,16 +12,12 @@ export interface DatabaseConfiguration {
 }
 
 export class DatabaseProvider {
-    private static connection: Connection;
-    private static config: DatabaseConfiguration;
-
-    public static configure(config: DatabaseConfiguration) {
+    public static configure(config: IDatabaseConfiguration) {
         DatabaseProvider.config = config;
     }
-
     public static async getConnection(): Promise<Connection> {
         if (DatabaseProvider.connection) {
-            return DatabaseProvider.connection
+            return DatabaseProvider.connection;
         }
         const { host, type, port, username, password, database } = DatabaseProvider.config;
         DatabaseProvider.connection = await createConnection({
@@ -31,9 +27,12 @@ export class DatabaseProvider {
             username,
             password,
             database,
-            entities: [Customer],
-            synchronize: true
+            entities: [UserEntity],
+            synchronize: true,
         });
         return DatabaseProvider.connection;
     }
+    private static connection: Connection;
+    private static config: IDatabaseConfiguration;
+
 }

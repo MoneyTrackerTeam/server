@@ -1,5 +1,6 @@
-import { CustomerController } from "./customer";
-
+import { AuthController } from "./authentication";
+import { UserController } from "./users";
 export const CONTROLLERS = [
-    new CustomerController()
-]
+    new UserController(),
+    new AuthController(),
+];

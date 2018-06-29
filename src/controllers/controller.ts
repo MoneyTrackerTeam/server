@@ -1,5 +1,4 @@
-import { HttpServer } from "../server/httpServer";
-
-export interface Controller {
-    initialize(httpServer: HttpServer): void;
+import { IHttpServer } from "../server/httpServer";
+export interface IController {
+    initialize(httpServer: IHttpServer): void;
 }
