@@ -1,5 +1,6 @@
 import { Connection, createConnection } from "typeorm";
-import { UserEntity } from "../entities/user";
+import { Transaction } from "../models/transaction";
+import { User } from "../models/user";
 
 export interface IDatabaseConfiguration {
     type: "postgres";
@@ -27,7 +28,7 @@ export class DatabaseProvider {
             username,
             password,
             database,
-            entities: [UserEntity],
+            entities: [User, Transaction],
             synchronize: true,
         });
         return DatabaseProvider.connection;

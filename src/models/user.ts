@@ -1,32 +1,28 @@
 import * as bcrypt from "bcrypt";
-import { DatabaseProvider } from "../database";
-import { UserEntity } from "../entities/user";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Transaction } from "./transaction";
+
+@Entity("users")
 export class User {
 
+    @PrimaryGeneratedColumn()
     public id?: number;
-    public name: string;
-    public username: string;
-    public password?: string;
-    constructor(name: string, username: string, password?: string, id?: number) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-    }
+    @Column()
 
-    public passwordMatch(pwd: string): boolean {
+    public name: string;
+    @Column()
+
+    public password: string;
+    @Column()
+    public username: string;
+
+    @OneToMany(type => Transaction, transactions => transactions.user)
+    public transactions?: Transaction[];
+
+    public passwordMatch?(pwd: string): boolean {
         return bcrypt.compareSync(pwd, this.password);
     }
-    public static returnModel(user: UserEntity): User {
-        return new User(user.name, user.username, user.password, user.id);
-    }
-    public static returnEntity(user: User): UserEntity {
-        const userEnt = new UserEntity();
-        userEnt.username = user.username;
-        userEnt.name = user.name;
-        userEnt.password = this.hashPassword(user.password);
-        return userEnt;
-    }
-    private static hashPassword(password: string): string {
-        return bcrypt.hashSync(password, 10);
+    public hashPassword?(): void {
+        this.password = bcrypt.hashSync(this.password, 10);
     }
 }

@@ -7,7 +7,7 @@ import { IController } from "./controller";
 
 export class AuthController implements IController {
     public initialize(httpServer: IHttpServer) {
-        httpServer.post("/login", this.login.bind(this));
+        httpServer.post("/login", this.login.bind(this), true);
 
     }
     private async login(req: Request, res: Response): Promise<void> {
