@@ -3,30 +3,19 @@ import { User } from "../models/user";
 
 class UserService {
     public async list(): Promise<User[]> {
-        const users: User[] = [];
-        const connection = await DatabaseProvider.getConnection();
-        return await connection.getRepository(User).find();
+        return await User.list();
     }
 
     public async findOneById(id: string | number): Promise<User> {
-        const connection = await DatabaseProvider.getConnection();
-        return await connection.getRepository(User).findOne(id);
+        return await User.getById(id);
     }
 
     public async findOneByUsername(username: string): Promise<User> {
-        const connection = await DatabaseProvider.getConnection();
-        return await connection.getRepository(User).findOne({ where: { username } });
+        return await User.getByUsername(username);
     }
 
     public async createNewUser(username: string, name: string, password: string): Promise<User> {
-        const connection = await DatabaseProvider.getConnection();
-        const repo = connection.getRepository(User);
-        const newUser = new User();
-        newUser.name = name;
-        newUser.password = password;
-        newUser.username = username;
-        newUser.hashPassword();
-        return await repo.save(newUser);
+        return await User.create(username, name, password);
     }
 }
 

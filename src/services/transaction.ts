@@ -4,18 +4,11 @@ import { User } from "../models/user";
 
 class TransactionService {
     public async list(): Promise<Transaction[]> {
-        const connection = await DatabaseProvider.getConnection();
-        return await connection.getRepository(Transaction).find();
+        return await Transaction.list();
     }
     public async createTransaction(title: string, amount: number, userId: string | number): Promise<Transaction> {
-        const connection = await DatabaseProvider.getConnection();
-        const userRepo = connection.getRepository(User);
-        const transRepo = connection.getRepository(Transaction);
-        const user = await userRepo.findOne(userId);
-        const newTransaction = transRepo.create({ title, amount });
-        newTransaction.user = user;
-        return await transRepo.save(newTransaction);
-
+        // do validation
+        return Transaction.create(title, amount, userId);
     }
 }
 
