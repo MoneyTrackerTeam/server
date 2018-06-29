@@ -6,7 +6,7 @@ import { IController } from "./controller";
 export class UserController implements IController {
     public initialize(httpServer: IHttpServer) {
         httpServer.get("/users", this.list.bind(this));
-        httpServer.post("/users", this.createNewUser.bind(this));
+        httpServer.post("/users", this.createNewUser.bind(this), true);
 
     }
     private async list(req: Request, res: Response): Promise<void> {

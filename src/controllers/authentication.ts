@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as jwt from "jsonwebtoken"
+import * as jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { IHttpServer } from "../server/httpServer";
 import { userService } from "../services/user";
