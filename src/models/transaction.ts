@@ -2,9 +2,9 @@ import { DatabaseProvider } from "../database";
 import { TransactionEntity } from "../entities/transaction";
 import { User } from "./user";
 export class Transaction {
-    public id: number;
-    public title: string;
-    public amount: number;
+    public id: number = 0;
+    public title: string = "default title";
+    public amount: number = 0;
     public user: User;
 
     public static async create(title: string, amount: number, userId: number | string): Promise<Transaction> {
@@ -14,8 +14,8 @@ export class Transaction {
         newEnt.title = title;
         newEnt.amount = amount;
         const ent = repo.create(newEnt);
-        newEnt.user = await User.getEntById(userId);
-        const newTrans = await repo.save(newEnt);
+        ent.user = await User.getEntById(userId);
+        const newTrans = await repo.save(ent);
         return Transaction.transform(newTrans);
     }
 
@@ -26,7 +26,7 @@ export class Transaction {
         const trans: Transaction[] = [];
         ents.forEach(e => {
             trans.push(Transaction.transform(e));
-        })
+        });
         return trans;
     }
 
