@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { TransactionsComponent } from './transactions/transactions.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 const appRoutes: Routes = [
   { path: 'transactions', component: TransactionsComponent }
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes, {
       enableTracing: true
-    })
+    }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

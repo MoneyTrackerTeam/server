@@ -1,4 +1,5 @@
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import * as express from "express";
 import passport from "../authentication/passport";
 import { CONTROLLERS } from "../controllers";
@@ -22,6 +23,7 @@ export class ApiServer implements IHttpServer {
         this.app = express();
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(cors());
         this.app.use(passport.initialize());
         CONTROLLERS.forEach((e) => {
             e.initialize(this);

@@ -1,0 +1,8 @@
+<div>
+  <h2>My Transactions</h2>
+  <ul class="heroes">
+    <li *ngFor="let transaction of transactions">
+      <span class="badge">{{transaction.id}}</span> {{transaction.title}}
+    </li>
+  </ul>
+</div>
