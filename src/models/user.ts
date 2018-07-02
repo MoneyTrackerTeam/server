@@ -16,7 +16,7 @@ export class User {
         const entity = new UserEntity();
         entity.name = name;
         entity.username = username;
-        entity.password = User.hashPassword(entity.password);
+        entity.password = User.hashPassword(password);
         const repoEnt: UserEntity = await repo.save(entity);
         return User.transform(repoEnt);
     }
