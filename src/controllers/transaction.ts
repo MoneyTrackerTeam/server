@@ -5,7 +5,7 @@ import { IController } from "./controller";
 
 export class TransactionController implements IController {
     public initialize(httpServer: IHttpServer) {
-        httpServer.get("/transactions", this.list.bind(this), true);
+        httpServer.get("/transactions", this.list.bind(this));
         httpServer.post("/transactions", this.createTransaction.bind(this));
         httpServer.get("/transaction/:id", this.getOneById.bind(this));
     }
