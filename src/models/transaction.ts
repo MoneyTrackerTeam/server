@@ -29,7 +29,13 @@ export class Transaction {
         });
         return trans;
     }
-
+    public static async getOne(id: number | string) {
+        const connection = await DatabaseProvider.getConnection();
+        const repo = connection.getRepository(TransactionEntity);
+        const ent = await repo.findOne(id, { relations: ["user"] });
+        const trans = Transaction.transform(ent);
+        return trans;
+    }
     public static transform(t: TransactionEntity): Transaction {
         const trans = new Transaction();
         trans.title = t.title;

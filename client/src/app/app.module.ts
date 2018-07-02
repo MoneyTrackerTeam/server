@@ -7,6 +7,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TransactionComponent } from './components/transaction/transaction.component';
 const appRoutes: Routes = [
   {
     path: 'transactions', component: TransactionsComponent
@@ -14,6 +15,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'transactions/:id',
+    component: TransactionComponent
   }
 ];
 
@@ -21,7 +26,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     TransactionsComponent,
-    LoginComponent
+    LoginComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,

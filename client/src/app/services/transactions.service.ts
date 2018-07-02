@@ -16,4 +16,10 @@ export class TransactionsService {
         catchError(this.msgs.handleError({ severity: 'error', text: 'Error fetching transactions' }, []))
       );
   }
+
+  getOneTransaction(id: number): Observable<ITransaction> {
+    return this.http.get<ITransaction | any>(`${this.transUrl}/${id}`).pipe(
+      catchError(this.msgs.handleError({ severity: 'error', text: 'Error fetching transactions' }, {}))
+    );
+  }
 }

@@ -10,6 +10,10 @@ class TransactionService {
         // do validation
         return Transaction.create(title, amount, userId);
     }
+
+    public async getTransactionById(id: number | string) {
+        return Transaction.getOne(id);
+    }
 }
 
 export const transactionService = new TransactionService();
