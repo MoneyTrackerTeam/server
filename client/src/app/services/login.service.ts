@@ -20,7 +20,7 @@ export class LoginService {
     };
     return this.http.post<IUser>(this.loginUrl, { username, password })
       .pipe(
-        catchError(this.msgs.handleError('login', mockUser))
+        catchError(this.msgs.handleError({ severity: 'error', text: 'Error logging in. Please try again' }))
       );
   }
 }

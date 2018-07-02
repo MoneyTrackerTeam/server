@@ -1,13 +1,4 @@
-h3 {
-    color : #000000;
-    text-align : center;
-    font-family: "SIMPSON";
-}
-form{
-    width: 500px;
-    margin: 0 auto;
-}
-.label{
-    font-size: 20pt;
-    margin-right:10px;
+.sign-in {
+  margin-top: 10%;
+  padding-left: 25%;
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MessagesService } from './services/messages.service';
 import { IError } from './interfaces';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +13,7 @@ export class AppComponent {
     severity: 'info',
     text: ''
   };
-  constructor(private msgs: MessagesService) {
+  constructor(private msgs: MessagesService, private router: Router) {
     msgs.errorOccured$.subscribe(error => this.errorOccured(error));
   }
 
@@ -22,5 +23,15 @@ export class AppComponent {
     setTimeout(() => {
       this.isError = false;
     }, 2000);
+  }
+  loggedIn(): boolean {
+    if (localStorage.getItem('access_token')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  onLogout() {
+    localStorage.removeItem('access_token');
   }
 }

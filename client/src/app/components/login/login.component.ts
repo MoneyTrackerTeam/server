@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { MessagesService } from '../../services/messages.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
   password: string;
   formValid = true;
   constructor(private loginService: LoginService,
-    private msgs: MessagesService) { }
+    private msgs: MessagesService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     this.formValid = true;
     this.loginService.login(this.username, this.password).subscribe(resp => {
       localStorage.setItem('access_token', `Bearer ${resp.accessToken}`);
+      this.router.navigate(['/transactions']);
     });
   }
 

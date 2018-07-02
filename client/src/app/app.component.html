@@ -1,12 +1,27 @@
 <div>
-  <nav>
-    <h3>
-      <a routerLink="/transactions">Transactions</a>
-    </h3>
-    <h3>
-      <a routerLink="/login">Login</a>
-    </h3>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/">Money Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/transactions">Transactions</a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" *ngIf="!loggedIn()">Login</a>
+          <a class="nav-link" routerLink="/login" *ngIf="loggedIn()" (click)="onLogout()">Logout</a>
+        </li>
+      </ul>
+    </div>
   </nav>
-  <div [hidden]="!isError">Hello! {{error.text}}</div>
-  <router-outlet></router-outlet>
+  <div class="container" style="margin-top:30px;">
+    <router-outlet></router-outlet>
+  </div>
 </div>

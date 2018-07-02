@@ -15,16 +15,10 @@ export class MessagesService {
     this.errorOccured$.emit(error);
   }
 
-  handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
+  handleError<T>(error: IError, result?: T) {
+    return (err: IError): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.emmitError({ severity: 'error', text: `Error ${operation}. Please try again` });
-
-      // Let the app keep running by returning an empty result.
+      this.emmitError(err);
       return of(result as T);
     };
   }
