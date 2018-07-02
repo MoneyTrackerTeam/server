@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,7 +9,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   formValid = true;
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
@@ -19,6 +20,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.formValid = true;
+    this.loginService.login(this.username, this.password).subscribe(createdUser => {
+      console.log(createdUser);
+    });
   }
 
 }

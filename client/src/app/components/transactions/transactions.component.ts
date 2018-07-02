@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../../services/transactions.service';
-import { Transaction } from '../../interfaces/';
+import { ITransaction } from '../../interfaces/';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -8,7 +8,7 @@ import { Transaction } from '../../interfaces/';
 })
 export class TransactionsComponent implements OnInit {
 
-  transactions: Transaction[] = [];
+  transactions: ITransaction[] = [];
   constructor(private transactionsService: TransactionsService) { }
 
   ngOnInit() {

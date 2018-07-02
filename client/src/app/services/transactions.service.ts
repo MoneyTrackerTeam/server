@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Transaction, User } from '../interfaces/';
+import { ITransaction, IUser } from '../interfaces/';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 @Injectable({
@@ -9,8 +9,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class TransactionsService {
   private transUrl = 'http://localhost:3000/transactions';
   constructor(private http: HttpClient) { }
-  getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.transUrl)
+  getTransactions(): Observable<ITransaction[]> {
+    return this.http.get<ITransaction[]>(this.transUrl)
       .pipe(
         catchError(this.handleError('getTransactions', [])),
         tap(transactions => this.log('fetched transactions'))
