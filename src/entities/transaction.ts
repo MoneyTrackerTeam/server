@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "./user";
-@Entity()
+@Entity("transactions")
 export class TransactionEntity {
     @PrimaryGeneratedColumn()
     public id: number;
@@ -10,6 +10,11 @@ export class TransactionEntity {
 
     @Column()
     public amount: number;
+
+    @Column({
+        type: "bigint",
+    })
+    public date: number;
 
     @ManyToOne((type) => UserEntity, (user) => user.transactions)
     public user: UserEntity;
