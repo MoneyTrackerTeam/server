@@ -1,20 +1,23 @@
 <div class="col-md-8 offset-md-2">
   <h2 style="margin-bottom: 20px;">Create new transaction</h2>
-  <form accept-charset="UTF-8" role="form" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+  <form accept-charset="UTF-8" role="form" #createTransactionForm="ngForm" (ngSubmit)="onSubmit()">
     <fieldset>
       <div class="form-group">
-        <input class="form-control" type="text" id="title" placeholder="Title" required [(ngModel)]="title" name="title">
+        <input class="form-control" type="text" id="title" placeholder="Title" required [(ngModel)]="title" name="title" required
+          #title1="ngModel">
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" id="amount" placeholder="Amount" [(ngModel)]="amount" name="amount">
+        <input class="form-control" type="text" id="amount" placeholder="Amount" [(ngModel)]="amount" name="amount" required>
       </div>
+      <div *ngIf="title1.invalid && (title1.dirty || title1.touched)"> Title invalid</div>
       <div class="form-group">
         <div class="input-group row align-items-center">
           <div class="col-md-7">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" (focus)="d.toggle()">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" (focus)="d.toggle()"
+              required>
           </div>
           <div class="col-md-5">
-            <ngb-timepicker [(ngModel)]="time" name="time" id="time"></ngb-timepicker>
+            <ngb-timepicker [(ngModel)]="time" name="time" id="time" size="medium" required></ngb-timepicker>
           </div>
         </div>
       </div>

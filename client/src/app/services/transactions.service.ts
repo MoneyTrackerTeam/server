@@ -13,13 +13,15 @@ export class TransactionsService {
   getTransactions(): Observable<ITransaction[]> {
     return this.http.get<ITransaction[]>(this.transUrl)
       .pipe(
-        catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transactions', module: 'get-transactions' }, []))
+        catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transactions', module: 'get-transactions' }, [])),
+        map(this.transformDateArray)
       );
   }
 
   getOneTransaction(id: number): Observable<ITransaction> {
     return this.http.get<ITransaction | any>(`${this.transUrl}/${id}`).pipe(
-      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transaction', module: 'get-transaction' }, {}))
+      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transaction', module: 'get-transaction' }, {})),
+      map(this.transformDate)
     );
   }
 
@@ -27,5 +29,16 @@ export class TransactionsService {
     return this.http.post<ITransaction | any>(this.transUrl, transaction).pipe(
       catchError(this.msgs.handleError({ severity: 'danger', text: 'Error creating transaction', module: 'create-transaction' }, {}))
     );
+  }
+
+  private transformDateArray(v: ITransaction[]): ITransaction[] {
+    v.map((t) => {
+      return t.readableDate = new Date(+t.date);
+    });
+    return v;
+  }
+  private transformDate(v: ITransaction): ITransaction {
+    v.readableDate = new Date(+v.date);
+    return v;
   }
 }

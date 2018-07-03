@@ -27,7 +27,6 @@ export class CreateTransactionComponent implements OnInit {
       amount: +this.amount,
       date: (new Date(date)).getTime(),
     };
-    console.log('asd');
     this.transactionService.createTransaction(transaction).subscribe(createdT => {
       this.msgs.handleError({
         severity: 'success',

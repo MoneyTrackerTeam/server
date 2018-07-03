@@ -4,6 +4,7 @@ export interface ITransaction {
     amount: number;
     date: number;
     user?: IUser;
+    readableDate?: Date;
 }
 export interface IUser {
     name: string;
