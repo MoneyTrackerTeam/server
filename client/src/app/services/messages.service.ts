@@ -20,7 +20,7 @@ export class MessagesService {
     return (err: IError): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       this.emmitError(error);
-      return err;
+      return of(result as T);
     };
   }
 }
