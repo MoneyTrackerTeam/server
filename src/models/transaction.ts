@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
+import { Month } from "./month";
 @Entity("transactions")
 export class Transaction {
     @PrimaryGeneratedColumn()
@@ -18,4 +19,7 @@ export class Transaction {
 
     @ManyToOne((type) => User, (user) => user.transactions)
     public user: User;
+
+    @ManyToOne(type => Month, month => month.transactions)
+    public month: Month;
 }
