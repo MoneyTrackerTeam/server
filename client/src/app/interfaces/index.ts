@@ -1,8 +1,9 @@
 export interface ITransaction {
-    id: number;
+    id?: number;
     title: string;
     amount: number;
-    user: IUser;
+    date: number;
+    user?: IUser;
 }
 export interface IUser {
     name: string;
@@ -12,6 +13,6 @@ export interface IUser {
 }
 
 export interface IError {
-    severity: 'error' | 'warning' | 'info';
+    severity: 'danger' | 'warning' | 'info' | 'success';
     text: string;
 }

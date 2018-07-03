@@ -13,13 +13,19 @@ export class TransactionsService {
   getTransactions(): Observable<ITransaction[]> {
     return this.http.get<ITransaction[]>(this.transUrl)
       .pipe(
-        catchError(this.msgs.handleError({ severity: 'error', text: 'Error fetching transactions' }, []))
+        catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transactions' }, []))
       );
   }
 
   getOneTransaction(id: number): Observable<ITransaction> {
     return this.http.get<ITransaction | any>(`${this.transUrl}/${id}`).pipe(
-      catchError(this.msgs.handleError({ severity: 'error', text: 'Error fetching transactions' }, {}))
+      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error fetching transaction' }, {}))
+    );
+  }
+
+  createTransaction(transaction: ITransaction): Observable<ITransaction> {
+    return this.http.post<ITransaction | any>(this.transUrl, transaction).pipe(
+      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error creating transaction' }, {}))
     );
   }
 }

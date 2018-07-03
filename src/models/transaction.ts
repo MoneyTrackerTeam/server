@@ -5,14 +5,16 @@ export class Transaction {
     public id: number = 0;
     public title: string = "default title";
     public amount: number = 0;
+    public date: number;
     public user: User;
-
-    public static async create(title: string, amount: number, userId: number | string): Promise<Transaction> {
+    // tslint:disable-next-line:max-line-length
+    public static async create(title: string, amount: number, date: number, userId: number | string): Promise<Transaction> {
         const connection = await DatabaseProvider.getConnection();
         const repo = connection.getRepository(TransactionEntity);
         const newEnt = new TransactionEntity();
         newEnt.title = title;
         newEnt.amount = amount;
+        newEnt.date = date;
         const ent = repo.create(newEnt);
         ent.user = await User.getEntById(userId);
         const newTrans = await repo.save(ent);
@@ -41,6 +43,7 @@ export class Transaction {
         trans.title = t.title;
         trans.id = t.id;
         trans.amount = t.amount;
+        trans.date = t.date;
         trans.user = User.transform(t.user);
         return trans;
     }

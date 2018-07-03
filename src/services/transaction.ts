@@ -6,9 +6,9 @@ class TransactionService {
     public async list(): Promise<Transaction[]> {
         return await Transaction.list();
     }
-    public async createTransaction(title: string, amount: number, userId: string | number): Promise<Transaction> {
+    public async createTransaction(title: string, amount: number, date: number, userId: string | number): Promise<Transaction> {
         // do validation
-        return Transaction.create(title, amount, userId);
+        return Transaction.create(title, amount, date, userId);
     }
 
     public async getTransactionById(id: number | string) {

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (!this.username || !this.password) {
-      this.msgs.emmitError({ severity: 'error', text: 'Incorrect credentials' });
+      this.msgs.emmitError({ severity: 'danger', text: 'Incorrect credentials' });
       return;
     }
     this.formValid = true;

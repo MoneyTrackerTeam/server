@@ -8,7 +8,8 @@
         "object-literal-sort-keys": false,
         "no-console": false,
         "member-ordering": false,
-        "arrow-parens": false
+        "arrow-parens": false,
+        "max-classes-per-file": false
     },
     "rulesDirectory": []
 }
