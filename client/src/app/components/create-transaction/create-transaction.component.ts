@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { TransactionsService } from '../../services/transactions.service';
+import { ITransaction } from '../../interfaces';
+import { MessagesService } from '../../services/messages.service';
 
 const now = new Date();
 @Component({
@@ -13,15 +16,22 @@ export class CreateTransactionComponent implements OnInit {
   title: string;
   amount: string;
   time: NgbTimeStruct;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private transactionService: TransactionsService, private msgs: MessagesService) { }
 
   ngOnInit() {
   }
   onSubmit() {
-    console.log(this.amount);
-    console.log(this.title);
-    console.log(this.date);
-    console.log(this.time);
+    const date = `${this.date.year}-${this.date.month}-${this.date.day} ${this.time.hour}:${this.time.minute}`;
+    const transaction: ITransaction = {
+      title: this.title,
+      amount: +this.amount,
+      date: (new Date(date)).getTime(),
+    };
+    console.log('asd');
+    this.transactionService.createTransaction(transaction).subscribe(createdT => {
+      this.msgs.handleError({ severity: 'info', text: `New transaction ${transaction.title} was created` });
+      this.router.navigate(['/transactions']);
+    });
   }
   onCancel() {
     this.router.navigate(['/']);

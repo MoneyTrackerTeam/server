@@ -1,8 +1,9 @@
 export interface ITransaction {
-    id: number;
+    id?: number;
     title: string;
     amount: number;
-    user: IUser;
+    date: number;
+    user?: IUser;
 }
 export interface IUser {
     name: string;
