@@ -10,6 +10,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { LoginComponent } from './components/login/login.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { CreateTransactionComponent } from './components/create-transaction/create-transaction.component';
+import { AlertComponent } from './components/alert/alert.component';
 const appRoutes: Routes = [
   {
     path: 'transactions', component: TransactionsComponent
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     TransactionsComponent,
     LoginComponent,
     TransactionComponent,
-    CreateTransactionComponent
+    CreateTransactionComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

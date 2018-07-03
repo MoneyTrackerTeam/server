@@ -12,14 +12,15 @@ export class MessagesService {
   }
 
   emmitError(error: IError) {
+    console.log(`Emmiting ${error}`);
     this.errorOccured$.emit(error);
   }
 
   handleError<T>(error: IError, result?: T) {
     return (err: IError): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      this.emmitError(err);
-      return of(result as T);
+      this.emmitError(error);
+      return err;
     };
   }
 }

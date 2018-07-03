@@ -13,6 +13,6 @@ export interface IUser {
 }
 
 export interface IError {
-    severity: 'error' | 'warning' | 'info';
+    severity: 'danger' | 'warning' | 'info' | 'success';
     text: string;
 }
