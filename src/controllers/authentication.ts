@@ -12,7 +12,7 @@ export class AuthController implements IController {
     }
     private async login(req: Request, res: Response): Promise<void> {
         const user: User = await userService.findOneByUsername(req.body.username);
-        if (user.passwordMatch(req.body.password)) {
+        if (userService.passwordMatch(req.body.password, user.password)) {
             const payload = { id: user.id };
             const token = jwt.sign(payload, "secret");
             res.json({

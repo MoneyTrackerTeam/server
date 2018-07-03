@@ -1,7 +1,7 @@
 import { Db, MongoClient } from "mongodb";
 import { Connection, createConnection } from "typeorm";
-import { TransactionEntity } from "../entities/transaction";
-import { UserEntity } from "../entities/user";
+import { Transaction } from "../models/transaction";
+import { User } from "../models/user";
 export interface IDatabaseConfiguration {
     type: "postgres";
     host: string;
@@ -30,7 +30,7 @@ export class DatabaseProvider {
             username,
             password,
             database,
-            entities: [UserEntity, TransactionEntity],
+            entities: [User, Transaction],
             synchronize: true,
         });
         return DatabaseProvider.connection;
