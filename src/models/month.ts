@@ -1,7 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Transaction } from "./transaction";
 
-@Entity("transactions")
+@Entity("months")
 export class Month {
     @PrimaryGeneratedColumn()
     public id: number;
@@ -12,8 +12,16 @@ export class Month {
     @Column()
     public budget: number;
 
-    @Column()
+    @Column({
+        default: 0,
+    })
     public spent: number;
+
+    @Column()
+    public monthNumber: number;
+
+    @Column()
+    public year: number;
 
     @OneToMany(type => Transaction, transaction => transaction.month)
     public transactions: Transaction[];
