@@ -19,13 +19,17 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (!this.username || !this.password) {
-      this.msgs.emmitError({ severity: 'danger', text: 'Incorrect credentials' });
+      this.msgs.emmitError({ severity: 'danger', text: 'Incorrect credentials', module: 'login' });
       return;
     }
     this.formValid = true;
     this.loginService.login(this.username, this.password).subscribe(resp => {
-      localStorage.setItem('access_token', `Bearer ${resp.accessToken}`);
-      this.router.navigate(['/transactions']);
+      if (resp.accessToken) {
+        localStorage.setItem('access_token', `Bearer ${resp.accessToken}`);
+        this.router.navigate(['/transactions']);
+      } else {
+        return;
+      }
     });
   }
 

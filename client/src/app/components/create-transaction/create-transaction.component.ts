@@ -29,7 +29,11 @@ export class CreateTransactionComponent implements OnInit {
     };
     console.log('asd');
     this.transactionService.createTransaction(transaction).subscribe(createdT => {
-      this.msgs.handleError({ severity: 'success', text: `New transaction ${transaction.title} was created` });
+      this.msgs.handleError({
+        severity: 'success',
+        text: `New transaction ${transaction.title} was created`,
+        module: 'create-transaction'
+      });
       this.router.navigate(['/transactions']);
     });
   }

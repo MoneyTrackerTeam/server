@@ -15,4 +15,5 @@ export interface IUser {
 export interface IError {
     severity: 'danger' | 'warning' | 'info' | 'success';
     text: string;
+    module: string;
 }

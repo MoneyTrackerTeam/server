@@ -53,7 +53,8 @@ export class MongoProvider {
         }
         try {
             const connection = await MongoClient.connect(this.config.url);
-            this.db = connection.db();
+            this.db = await connection.db();
+            return this.db;
         } catch (e) {
             console.log(e);
         }

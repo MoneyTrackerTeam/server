@@ -13,6 +13,7 @@ export class LogsController implements IController {
             severity: req.body.severity,
             module: req.body.module,
             userId: +req.user.id,
+            error: req.body.error,
         });
         res.send(log);
     }

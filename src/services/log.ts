@@ -5,6 +5,7 @@ interface ILog {
     message: string;
     module: string;
     userId: number;
+    error: any;
 }
 
 class LogService {
