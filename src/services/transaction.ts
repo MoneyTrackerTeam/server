@@ -21,7 +21,7 @@ class TransactionService {
         const transEnt = await transRepo.create(transaction);
         const user = await userRepo.findOne(userId);
         transEnt.user = user;
-        transEnt.month = await this.getMonth(date);
+        transEnt.month = await this.getMonth(date, amount);
         return await transRepo.save(transEnt);
     }
 
@@ -30,19 +30,20 @@ class TransactionService {
         return await repo.findOne(id, { relations: ["user", "month"] });
     }
 
-    private async getMonth(dateN: number): Promise<Month> {
+    private async getMonth(dateN: number, amount: number): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const date = new Date(+dateN);
-        const month = await repo.findOne({
+        let month = await repo.findOne({
             where: {
                 monthNumber: date.getMonth(),
                 year: date.getFullYear(),
             },
         });
         if (month) {
-            return month;
+            return await monthService.incrementMonth(month.id, amount);
         } else {
-            return await monthService.createMonth(Defaults.defaultBudget, date.getMonth(), date.getFullYear());
+            month = await monthService.createMonth(Defaults.defaultBudget, date.getMonth(), date.getFullYear());
+            return await monthService.incrementMonth(month.id, amount);
         }
     }
 }

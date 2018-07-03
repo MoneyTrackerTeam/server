@@ -16,13 +16,19 @@ class MonthService {
         month.budget = budget;
         month.monthNumber = monthN;
         month.year = year;
-        const test = await repo.save(month);
-        return test;
+        return await repo.save(month);
     }
 
     public async getById(id: number | string): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         return await repo.findOne({ relations: ["transactionss"] });
+    }
+
+    public async incrementMonth(id, value): Promise<Month> {
+        const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
+        const month = await repo.findOne(id);
+        month.spent += value;
+        return await repo.save(month);
     }
 }
 export const monthService = new MonthService();
