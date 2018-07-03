@@ -1,7 +1,7 @@
+import { Db, MongoClient } from "mongodb";
 import { Connection, createConnection } from "typeorm";
 import { TransactionEntity } from "../entities/transaction";
 import { UserEntity } from "../entities/user";
-
 export interface IDatabaseConfiguration {
     type: "postgres";
     host: string;
@@ -11,7 +11,9 @@ export interface IDatabaseConfiguration {
     database: string;
     ssl?: boolean;
 }
-
+export interface IMongoConfig {
+    url: string;
+}
 export class DatabaseProvider {
     public static configure(config: IDatabaseConfiguration) {
         DatabaseProvider.config = config;
@@ -36,4 +38,24 @@ export class DatabaseProvider {
     private static connection: Connection;
     private static config: IDatabaseConfiguration;
 
+}
+
+export class MongoProvider {
+    private static config: IMongoConfig;
+    private static db: Db;
+    public static configure(config: IMongoConfig) {
+        MongoProvider.config = config;
+    }
+
+    public static async getConnection() {
+        if (MongoProvider.db) {
+            return MongoProvider.db;
+        }
+        try {
+            const connection = await MongoClient.connect(this.config.url);
+            this.db = connection.db();
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
