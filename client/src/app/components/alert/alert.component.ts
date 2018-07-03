@@ -21,7 +21,6 @@ export class AlertComponent implements OnInit {
   }
 
   private addAlert(alert: IAlert) {
-    console.log(`Added alert`);
     const id = this.alerts.length + 1;
     alert.id = id;
     this.alerts.push(alert);

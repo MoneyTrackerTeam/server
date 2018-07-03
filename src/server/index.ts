@@ -39,7 +39,6 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    console.log(e);
                     res.status(500).json(e);
                 }
             });
@@ -48,7 +47,6 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    console.log(e);
                     res.status(500).json(e);
                 }
             });

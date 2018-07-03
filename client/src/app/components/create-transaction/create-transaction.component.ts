@@ -21,6 +21,9 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit() {
+    if (this.hasErrors()) {
+      return;
+    }
     const date = `${this.date.year}-${this.date.month}-${this.date.day} ${this.time.hour}:${this.time.minute}`;
     const transaction: ITransaction = {
       title: this.title,
@@ -38,5 +41,26 @@ export class CreateTransactionComponent implements OnInit {
   }
   onCancel() {
     this.router.navigate(['/']);
+  }
+
+  hasErrors() {
+    let isFailed = false;
+    if (!this.title) {
+      this.msgs.showAlert({ severity: 'warning', module: 'form', text: ' Title is required' });
+      isFailed = true;
+    }
+    if (!this.amount) {
+      this.msgs.showAlert({ severity: 'warning', module: 'form', text: 'Amount is required' });
+      isFailed = true;
+    }
+    if (!this.date) {
+      this.msgs.showAlert({ severity: 'warning', module: 'form', text: 'Date is required' });
+      isFailed = true;
+    }
+    if (!this.time) {
+      this.msgs.showAlert({ severity: 'warning', module: 'form', text: 'Select time' });
+      isFailed = true;
+    }
+    return isFailed;
   }
 }

@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
             });
             return next.handle(req);
         } else {
-            console.log('asd');
             this.router.navigate(['login']);
         }
     }

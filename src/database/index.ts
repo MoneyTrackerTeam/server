@@ -51,12 +51,8 @@ export class MongoProvider {
         if (MongoProvider.db) {
             return MongoProvider.db;
         }
-        try {
-            const connection = await MongoClient.connect(this.config.url);
-            this.db = await connection.db();
-            return this.db;
-        } catch (e) {
-            console.log(e);
-        }
+        const connection = await MongoClient.connect(this.config.url);
+        this.db = await connection.db();
+        return this.db;
     }
 }

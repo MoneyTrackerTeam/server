@@ -12,8 +12,7 @@ export class MessagesService {
     this.errorOccured$ = new EventEmitter();
   }
 
-  emmitError(error: IError) {
-    console.log(`Emmiting ${error}`);
+  private emmitError(error: IError) {
     this.errorOccured$.emit(error);
   }
 
@@ -24,9 +23,10 @@ export class MessagesService {
       return of(result as T);
     };
   }
-
+  showAlert(alert: IError) {
+    this.emmitError(alert);
+  }
   private logToDB(error: IError, err) {
-    console.log('asd');
     const logUrl = 'http://localhost:3000/logs';
     const payload = {
       ...error,
