@@ -37,11 +37,7 @@ export class MonthController implements IController {
         res.status(200).json(await monthService.list());
 
     }
-
-    private async createTransaction(req: Request, res: Response): Promise<void> {
-
-    }
     private async getOneById(req: Request, res: Response): Promise<void> {
-
+        res.status(200).json(await monthService.getById(req.params.id));
     }
 }
