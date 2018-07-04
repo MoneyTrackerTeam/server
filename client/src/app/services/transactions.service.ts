@@ -31,13 +31,13 @@ export class TransactionsService {
     );
   }
 
-  private transformDateArray(v: ITransaction[]): ITransaction[] {
+  transformDateArray(v: ITransaction[]): ITransaction[] {
     v.map((t) => {
       return t.readableDate = new Date(+t.date);
     });
     return v;
   }
-  private transformDate(v: ITransaction): ITransaction {
+  transformDate(v: ITransaction): ITransaction {
     v.readableDate = new Date(+v.date);
     return v;
   }

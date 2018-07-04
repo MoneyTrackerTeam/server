@@ -6,6 +6,16 @@ export interface ITransaction {
     user?: IUser;
     readableDate?: Date;
 }
+
+export interface IMonth {
+    id: number;
+    title: string;
+    budget: number;
+    spent: number;
+    monthNumber: number;
+    year: number;
+    transactions: ITransaction[];
+}
 export interface IUser {
     name: string;
     username: string;
