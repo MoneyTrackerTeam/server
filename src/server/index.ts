@@ -39,7 +39,11 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    res.status(500).json(e);
+                    res.status(500).json({
+                        msg: "Unhandled error occured",
+                        error: e,
+                    });
+                    console.log(e);
                 }
             });
         } else {

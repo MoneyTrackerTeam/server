@@ -1,4 +1,5 @@
 import * as bcrypt from "bcrypt";
+import { FindOneOptions } from "typeorm";
 import { DatabaseProvider } from "../database";
 import { User } from "../models/user";
 
@@ -11,12 +12,21 @@ class UserService {
 
     public async findOneById(id: string | number): Promise<User> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(User);
-        return await repo.findOne(id);
+        const opts: FindOneOptions<User> = {
+            select: ["id", "password", "name", "username"],
+        }
+        return await repo.findOne(id, opts);
     }
 
     public async findOneByUsername(username: string): Promise<User> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(User);
-        return await repo.findOne({ where: { username } });
+        const opts: FindOneOptions<User> = {
+            where: {
+                username,
+            },
+            select: ["id", "password", "name", "username"],
+        }
+        return await repo.findOne(opts);
     }
 
     public async createNewUser(username: string, name: string, password: string): Promise<User> {

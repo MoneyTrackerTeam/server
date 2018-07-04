@@ -1,10 +1,20 @@
 import { DatabaseProvider } from "../database";
 import { Month } from "../models/month";
+import { FindManyOptions } from "typeorm";
 
 class MonthService {
-    public async list(): Promise<Month[]> {
+    public async list(query?: FindManyOptions<Month>): Promise<Month[]> {
+        let opts: FindManyOptions<Month> = {};
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
-        return await repo.find({ relations: ["transactions"] });
+        if (query) {
+            opts = {
+                ...query,
+                relations: ["transactions"],
+            };
+        } else {
+            opts.relations = ["transactions"];
+        }
+        return await repo.find(opts);
     }
     // tslint:disable-next-line:max-line-length
     public async createMonth(budget: number, monthN: number, year: number): Promise<Month> {
