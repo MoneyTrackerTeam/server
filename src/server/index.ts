@@ -51,7 +51,13 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    res.status(500).json(e);
+                    res.status(500).json({
+                        success: false,
+                        error: {
+                            message: e.message,
+                            stack: e.stack,
+                        }
+                    });
                 }
             });
         }

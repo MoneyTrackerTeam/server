@@ -14,7 +14,7 @@ class UserService {
         const repo = (await DatabaseProvider.getConnection()).getRepository(User);
         const opts: FindOneOptions<User> = {
             select: ["id", "password", "name", "username"],
-        }
+        };
         return await repo.findOne(id, opts);
     }
 
@@ -25,7 +25,7 @@ class UserService {
                 username,
             },
             select: ["id", "password", "name", "username"],
-        }
+        };
         return await repo.findOne(opts);
     }
 
