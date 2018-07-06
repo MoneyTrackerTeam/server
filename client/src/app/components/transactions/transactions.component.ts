@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../../services/transactions.service';
 import { ITransaction, IMonth } from '../../interfaces/';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { MonthsService } from '../../services/months.service';
+import { MessagesService } from '../../services/messages.service';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -15,7 +16,8 @@ export class TransactionsComponent implements OnInit {
   selectedMonth: IMonth;
   isMonthSelected = false;
   constructor(private transactionsService: TransactionsService, private router: Router,
-    private monthService: MonthsService) { }
+    private monthService: MonthsService,
+    private msgs: MessagesService) { }
 
   ngOnInit() {
     this.getTransaction();
@@ -44,6 +46,23 @@ export class TransactionsComponent implements OnInit {
       this.shownTransactions = this.allTransaction;
       this.isMonthSelected = false;
       this.selectedMonth = null;
+    }
+  }
+  testFunc(e: any) {
+  }
+  navigateToTr(e: any, t: ITransaction) {
+    // e.type==='click' &&
+    if (e.type === 'click' && e.target.id === 'delete-transaction') {
+      this.transactionsService.deleteTransaction(t.id).subscribe((r) => {
+        if (r) {
+          this.shownTransactions = this.shownTransactions.filter((tr) => {
+            return tr.id !== t.id;
+          });
+          this.msgs.showAlert({ severity: 'info', text: 'Transaction deleted', module: 'transactions' });
+        }
+      });
+    } else {
+      this.router.navigate(['/transactions', t.id]);
     }
   }
 }

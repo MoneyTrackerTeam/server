@@ -31,14 +31,24 @@ export class TransactionsService {
     );
   }
 
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.delete(`${this.transUrl}/${id}`).pipe(
+      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error deleting transaction', module: 'delete-transaction' },
+        false))
+    );
+  }
+
   transformDateArray(v: ITransaction[]): ITransaction[] {
     v.map((t) => {
-      return t.readableDate = new Date(+t.date);
+      const d = new Date(+t.date);
+      t.readableDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+      return t.readableDate;
     });
     return v;
   }
   transformDate(v: ITransaction): ITransaction {
-    v.readableDate = new Date(+v.date);
+    const d = new Date(+v.date);
+    v.readableDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
     return v;
   }
 }

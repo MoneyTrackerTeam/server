@@ -15,12 +15,14 @@
       <button class="btn btn-primary" (click)="addTransaction()">Add Transaction</button>
     </div>
   </div>
-  <div class="list-group">
-    <a *ngFor="let transaction of shownTransactions" class="list-group-item list-group-item-action" routerLink="/transactions/{{transaction.id}}">
-      <b>{{transaction.title}}
-        <br>
-      </b>
-      <span>{{transaction.readableDate}}</span>
-    </a>
-  </div>
+  <ul class="list-group">
+    <li *ngFor="let transaction of shownTransactions" class="list-group-item list-group-item-action" (click)="navigateToTr($event,transaction)">
+      <div class="row">
+        <div class="col-md-4">{{transaction.title}}</div>
+        <div class="col-md-4">{{transaction.readableDate}}</div>
+        <div class="col-md-3">{{transaction.amount}}</div>
+        <button id="delete-transaction" class="btn btn-sm btn-primary" (click)="testFunc($event)">X</button>
+      </div>
+    </li>
+  </ul>
 </div>

@@ -29,7 +29,10 @@ class TransactionService {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         return await repo.findOne(id, { relations: ["user", "month"] });
     }
-
+    public async deleteTransaction(id: number | string) {
+        const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
+        return await repo.delete(id);
+    }
     private async getMonth(dateN: number, amount: number): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const date = new Date(+dateN);

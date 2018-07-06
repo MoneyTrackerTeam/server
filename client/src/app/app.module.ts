@@ -40,7 +40,9 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {
+      enableTracing: false
+    }),
     HttpClientModule,
     FormsModule,
     NgbModule.forRoot()
