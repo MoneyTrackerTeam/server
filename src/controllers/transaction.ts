@@ -16,7 +16,7 @@ export class TransactionController implements IController {
 
     private async createTransaction(req: Request, res: Response): Promise<void> {
         const transaction = await transactionService.
-            createTransaction(req.body.title, +req.body.amount, req.body.date, req.user.id);
+            createTransaction(req.body.title, +req.body.amount, req.body.date, req.user.id, req.body.transactionId);
         res.status(201).json(transaction);
     }
     private async getOneById(req: Request, res: Response): Promise<void> {

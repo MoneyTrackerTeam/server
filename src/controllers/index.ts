@@ -1,4 +1,5 @@
 import { AuthController } from "./authentication";
+import { CategoriesController } from "./categories";
 import { LogsController } from "./logs";
 import { MonthController } from "./month";
 import { TransactionController } from "./transaction";
@@ -8,5 +9,6 @@ export const CONTROLLERS = [
     new AuthController(),
     new TransactionController(),
     new LogsController(),
-    new MonthController()
+    new MonthController(),
+    new CategoriesController(),
 ];

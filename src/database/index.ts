@@ -1,5 +1,6 @@
 import { Db, MongoClient } from "mongodb";
 import { Connection, createConnection } from "typeorm";
+import { Category } from "../models/category";
 import { Month } from "../models/month";
 import { Transaction } from "../models/transaction";
 import { User } from "../models/user";
@@ -31,7 +32,7 @@ export class DatabaseProvider {
             username,
             password,
             database,
-            entities: [User, Transaction, Month],
+            entities: [User, Transaction, Month, Category],
             synchronize: true,
         });
         return DatabaseProvider.connection;

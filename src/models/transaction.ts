@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Category } from "./category";
 import { Month } from "./month";
 import { User } from "./user";
 @Entity("transactions")
@@ -22,4 +23,7 @@ export class Transaction {
 
     @ManyToOne(type => Month, month => month.transactions)
     public month: Month;
+
+    @ManyToOne(type => Category, category => category.transactions)
+    public category: Category;
 }
