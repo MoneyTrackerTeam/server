@@ -10,7 +10,7 @@ import { monthService } from "./month";
 class TransactionService {
     public async list(): Promise<Transaction[]> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
-        return await repo.find({ relations: ["user", "month"] });
+        return await repo.find({ relations: ["user", "month", "category"] });
     }
     // tslint:disable-next-line:max-line-length
     public async createTransaction(title: string, amount: number, date: number, userId: string | number, catId: number): Promise<Transaction> {

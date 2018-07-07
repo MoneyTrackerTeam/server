@@ -16,7 +16,7 @@ class CategoryService {
 
     public async getById(id: number | string): Promise<Category> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Category);
-        return await repo.findOne(id, { relations: ["transactions"] });
+        return await repo.findOneOrFail(id, { relations: ["transactions"] });
     }
 
     public async getByName(name: string): Promise<Category> {

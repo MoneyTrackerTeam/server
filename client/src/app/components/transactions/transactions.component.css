@@ -1,3 +1,7 @@
-li{
-    cursor: pointer;
+li {
+  cursor: pointer;
+}
+
+i {
+  margin-right: 10px;
 }

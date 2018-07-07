@@ -37,6 +37,7 @@ export class CreateTransactionComponent implements OnInit {
       title: this.title,
       amount: +this.amount,
       date: (new Date(date)).getTime(),
+      categoryId: this.categoryId
     };
     this.transactionService.createTransaction(transaction).subscribe(createdT => {
       this.msgs.handleError({
