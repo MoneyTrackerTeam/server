@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { TransactionsService } from '../../services/transactions.service';
-import { ITransaction } from '../../interfaces';
+import { ITransaction, ICategory } from '../../interfaces';
 import { MessagesService } from '../../services/messages.service';
+import { CategoryService } from '../../services/category.service';
 
 const now = new Date();
 @Component({
@@ -16,9 +17,16 @@ export class CreateTransactionComponent implements OnInit {
   title: string;
   amount: string;
   time: NgbTimeStruct;
-  constructor(private router: Router, private transactionService: TransactionsService, private msgs: MessagesService) { }
+  categoryId: number;
+  categories: ICategory[];
+  constructor(private router: Router,
+    private transactionService: TransactionsService,
+    private msgs: MessagesService,
+    private categoryService: CategoryService) { }
 
   ngOnInit() {
+    this.categoryId = 0;
+    this.getCategories();
   }
   onSubmit() {
     if (this.hasErrors()) {
@@ -43,6 +51,21 @@ export class CreateTransactionComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  getCategories() {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+  }
+  onCategoryCreated(cat: ICategory) {
+    if (cat.id === -1) {
+
+    } else {
+      this.categories.push(cat);
+      this.categoryId = cat.id;
+    }
+
+  }
+
   hasErrors() {
     let isFailed = false;
     if (!this.title) {
@@ -59,6 +82,10 @@ export class CreateTransactionComponent implements OnInit {
     }
     if (!this.time) {
       this.msgs.showAlert({ severity: 'warning', module: 'form', text: 'Select time' });
+      isFailed = true;
+    }
+    if (this.categoryId < 1) {
+      this.msgs.showAlert({ severity: 'warning', module: 'form', text: 'Pick a category' });
       isFailed = true;
     }
     return isFailed;

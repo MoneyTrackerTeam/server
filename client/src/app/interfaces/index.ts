@@ -28,3 +28,9 @@ export interface IError {
     text: string;
     module: string;
 }
+
+export interface ICategory {
+    id: number;
+    name?: string;
+    trnsactions?: ITransaction[];
+}

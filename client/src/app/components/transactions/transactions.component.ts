@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../../services/transactions.service';
 import { ITransaction, IMonth } from '../../interfaces/';
-import { Router, RouterEvent } from '@angular/router';
+import { Router } from '@angular/router';
 import { MonthsService } from '../../services/months.service';
 import { MessagesService } from '../../services/messages.service';
 @Component({
@@ -51,7 +51,6 @@ export class TransactionsComponent implements OnInit {
   testFunc(e: any) {
   }
   navigateToTr(e: any, t: ITransaction) {
-    // e.type==='click' &&
     if (e.type === 'click' && e.target.id === 'delete-transaction') {
       this.transactionsService.deleteTransaction(t.id).subscribe((r) => {
         if (r) {
