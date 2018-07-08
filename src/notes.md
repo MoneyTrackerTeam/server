@@ -1,0 +1,1 @@
+- Edit incrementation of month - split getMonth and increment()
