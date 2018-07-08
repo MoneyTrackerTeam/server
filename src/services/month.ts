@@ -37,7 +37,7 @@ class MonthService {
     public async incrementMonth(id, value): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const month = await repo.findOne(id);
-        month.spent += value;
+        month.spent = month.spent + value;
         return await repo.save(month);
     }
 }

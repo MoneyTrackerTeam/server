@@ -8,6 +8,7 @@ export class TransactionController implements IController {
         httpServer.get("/transactions", this.list.bind(this));
         httpServer.post("/transactions", this.createTransaction.bind(this));
         httpServer.get("/transactions/:id", this.getOneById.bind(this));
+        httpServer.put("/transactions/:id", this.update.bind(this));
         httpServer.delete("/transactions/:id", this.delete.bind(this));
     }
     private async list(req: Request, res: Response): Promise<void> {
@@ -22,6 +23,12 @@ export class TransactionController implements IController {
     private async getOneById(req: Request, res: Response): Promise<void> {
         const transaction = await transactionService.getTransactionById(req.params.id);
         res.status(200).json(transaction);
+    }
+
+    private async update(req: Request, res: Response) {
+        const { title, amount, categoryId, date } = req.body;
+        const edit = await transactionService.updateTransaction(req.params.id, title, amount, date, categoryId);
+        res.json(edit);
     }
 
     private async delete(req: Request, res: Response): Promise<void> {

@@ -32,6 +32,27 @@ class TransactionService {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         return await repo.findOne(id, { relations: ["user", "month"] });
     }
+
+    public async updateTransaction(id: string, title: string, amount: number, date: number, catId: string) {
+        const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
+        const tr = await repo.findOne(id, { relations: ["user", "month", "category"] });
+        if (amount) {
+            tr.amount = amount;
+        }
+        if (title) {
+            tr.title = title;
+        }
+        if (date) {
+            tr.date = date;
+            const month = tr.month;
+            tr.month = await this.getMonth(date, +amount);
+        }
+        if (catId) {
+            tr.category.id = (await this.getCategory(catId)).id;
+        }
+        return await repo.save(tr);
+    }
+
     public async deleteTransaction(id: number | string) {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         return await repo.delete(id);
@@ -53,7 +74,7 @@ class TransactionService {
         }
     }
 
-    private async getCategory(id: number): Promise<Category> {
+    private async getCategory(id: number | string): Promise<Category> {
         const cat = await categoryService.getById(id);
         if (!cat) {
             throw new Error("Category was not found. Please create one");
