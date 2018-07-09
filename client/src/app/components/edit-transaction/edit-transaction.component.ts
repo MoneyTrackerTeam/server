@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-transaction.component.css']
 })
 export class EditTransactionComponent implements OnInit {
-
+  title;
+  amount;
+  category;
+  date;
+  time;
   constructor() { }
 
   ngOnInit() {

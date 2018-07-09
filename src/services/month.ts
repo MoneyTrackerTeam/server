@@ -41,10 +41,19 @@ class MonthService {
         return await repo.save(month);
     }
 
-    public async decrementMonth(month: Month, value): Promise<Month> {
+    public async decrementMonth(id: number, value): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
+        const month = await repo.findOne(id, { relations: ["transactions"] });
         month.spent = month.spent - value;
+        if (month.transactions.length === 0) {
+            return await this.deleteMonth(month);
+        }
         return await repo.save(month);
+    }
+
+    private async deleteMonth(month: Month) {
+        const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
+        return await repo.remove(month);
     }
 }
 export const monthService = new MonthService();

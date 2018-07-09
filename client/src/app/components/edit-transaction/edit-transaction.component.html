@@ -1,3 +1,37 @@
-<p>
-  edit-transaction works!
-</p>
+<div class="col-md-8 offset-md-2">
+  <h2 style="margin-bottom: 20px;">Create new transaction</h2>
+  <form (submit)="onSubmit()">
+    <fieldset>
+      <div class="form-group">
+        <input class="form-control" type="text" id="title" placeholder="Title" required [(ngModel)]="title" name="title" required
+          #title1="ngModel">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" id="amount" placeholder="Amount" [(ngModel)]="amount" name="amount" required>
+      </div>
+      <div class="form-group">
+        <div class="form-group">
+          <select class="form-control" id="categories" [(ngModel)]="categoryId" name="categoryId">
+            <option value="0" disabled selected>Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+            <option value="-1">Create new...</option>
+          </select>
+        </div>
+        <app-create-category *ngIf="categoryId==-1" (categoryCreated)="onCategoryCreated($event)"></app-create-category>
+      </div>
+      <div class="form-group">
+        <div class="input-group row align-items-center">
+          <div class="col-md-7">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="date" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" (focus)="d.toggle()"
+              required>
+          </div>
+          <div class="col-md-5">
+            <ngb-timepicker [(ngModel)]="time" name="time" id="time" size="medium" required></ngb-timepicker>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <input class="btn btn-danger" type="button" value="Cancel" style="margin-right: 10px;" (click)="onCancel()">
+    <button type="submit" class="btn btn-success">Create</button>
+  </form>
+</div>

@@ -36,7 +36,7 @@ class TransactionService {
 
     public async updateTransaction(id: string, title: string, amount: number, date: number, catId: string) {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
-        const tr = await repo.findOne(id, { relations: ["user", "month", "category"] });
+        let tr = await repo.findOne(id, { relations: ["user", "month", "month.transactions", "category"] });
         if (amount) {
             tr.amount = amount;
         }
@@ -46,8 +46,9 @@ class TransactionService {
         if (date) {
             tr.date = date;
             const month = tr.month;
-            await monthService.decrementMonth(month, amount);
             tr.month = await this.getMonth(date, +amount);
+            tr = await repo.save(tr);
+            await monthService.decrementMonth(month.id, amount);
             await monthService.incrementMonth(tr.month, amount);
         }
         if (catId) {
