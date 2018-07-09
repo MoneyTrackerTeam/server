@@ -27,7 +27,7 @@ export class TransactionController implements IController {
 
     private async update(req: Request, res: Response) {
         const { title, amount, categoryId, date } = req.body;
-        const edit = await transactionService.updateTransaction(req.params.id, title, amount, date, categoryId);
+        const edit = await transactionService.updateTransaction(req.params.id, title, +amount, date, categoryId);
         res.json(edit);
     }
 

@@ -24,6 +24,7 @@ class TransactionService {
         const user = await userRepo.findOne(userId);
         transEnt.user = user;
         transEnt.month = await this.getMonth(date, amount);
+        await monthService.incrementMonth(transEnt.month, amount);
         transEnt.category = await this.getCategory(catId);
         return await transRepo.save(transEnt);
     }
@@ -45,7 +46,9 @@ class TransactionService {
         if (date) {
             tr.date = date;
             const month = tr.month;
+            await monthService.decrementMonth(month, amount);
             tr.month = await this.getMonth(date, +amount);
+            await monthService.incrementMonth(tr.month, amount);
         }
         if (catId) {
             tr.category.id = (await this.getCategory(catId)).id;
@@ -60,17 +63,16 @@ class TransactionService {
     private async getMonth(dateN: number, amount: number): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const date = new Date(+dateN);
-        let month = await repo.findOne({
+        const month = await repo.findOne({
             where: {
                 monthNumber: date.getMonth(),
                 year: date.getFullYear(),
             },
         });
         if (month) {
-            return await monthService.incrementMonth(month.id, amount);
+            return month;
         } else {
-            month = await monthService.createMonth(Defaults.defaultBudget, date.getMonth(), date.getFullYear());
-            return await monthService.incrementMonth(month.id, amount);
+            return await monthService.createMonth(Defaults.defaultBudget, date.getMonth(), date.getFullYear());
         }
     }
 

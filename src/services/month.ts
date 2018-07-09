@@ -1,6 +1,6 @@
+import { FindManyOptions } from "typeorm";
 import { DatabaseProvider } from "../database";
 import { Month } from "../models/month";
-import { FindManyOptions } from "typeorm";
 
 class MonthService {
     public async list(query?: FindManyOptions<Month>): Promise<Month[]> {
@@ -38,6 +38,12 @@ class MonthService {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const month = await repo.findOne(id);
         month.spent = month.spent + value;
+        return await repo.save(month);
+    }
+
+    public async decrementMonth(month: Month, value): Promise<Month> {
+        const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
+        month.spent = month.spent - value;
         return await repo.save(month);
     }
 }
