@@ -31,6 +31,12 @@ export class TransactionsService {
     );
   }
 
+  updateTransaction(transaction: ITransaction): Observable<ITransaction> {
+    return this.http.put<ITransaction | any>(`${this.transUrl}/${transaction.id}`, transaction).pipe(
+      catchError(this.msgs.handleError({ severity: 'danger', text: 'Error creating transaction', module: 'create-transaction' }, {}))
+    );
+  }
+
   deleteTransaction(id: number): Observable<any> {
     return this.http.delete(`${this.transUrl}/${id}`).pipe(
       catchError(this.msgs.handleError({ severity: 'danger', text: 'Error deleting transaction', module: 'delete-transaction' },
@@ -42,13 +48,15 @@ export class TransactionsService {
     v.map((t) => {
       const d = new Date(+t.date);
       t.readableDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-      return t.readableDate;
+      t.readableTime = `${d.getHours()}:${d.getMinutes() <= 0 ? '0' + d.getMinutes().toString() : d.getMinutes()}`;
+      return t;
     });
     return v;
   }
   transformDate(v: ITransaction): ITransaction {
     const d = new Date(+v.date);
     v.readableDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+    v.readableTime = `${d.getHours()}:${d.getMinutes() <= 0 ? '0' + d.getMinutes().toString() : d.getMinutes()}`;
     return v;
   }
 }

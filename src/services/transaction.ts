@@ -31,7 +31,7 @@ class TransactionService {
 
     public async getTransactionById(id: number | string) {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
-        return await repo.findOne(id, { relations: ["user", "month"] });
+        return await repo.findOne(id, { relations: ["user", "month", "category"] });
     }
 
     public async updateTransaction(id: string, title: string, amount: number, date: number, catId: string) {

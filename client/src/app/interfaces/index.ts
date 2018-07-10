@@ -5,6 +5,7 @@ export interface ITransaction {
     date: number;
     user?: IUser;
     readableDate?: String;
+    readableTime?: String;
     categoryId?: string | number;
     category?: ICategory;
 }
