@@ -17,6 +17,8 @@ export class Transaction {
         type: "bigint",
     })
     public date: number;
+    @Column({ nullable: true })
+    public note: string;
 
     @ManyToOne((type) => User, (user) => user.transactions)
     public user: User;

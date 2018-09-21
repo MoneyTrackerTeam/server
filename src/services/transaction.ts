@@ -13,13 +13,19 @@ class TransactionService {
         return await repo.find({ relations: ["user", "month", "category"] });
     }
     // tslint:disable-next-line:max-line-length
-    public async createTransaction(title: string, amount: number, date: number, userId: string | number, catId: number): Promise<Transaction> {
+    public async createTransaction(title: string,
+        amount: number,
+        date: number,
+        userId: string | number,
+        catId: number,
+        note: string): Promise<Transaction> {
         const transRepo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         const userRepo = (await DatabaseProvider.getConnection()).getRepository(User);
         const transaction = new Transaction();
         transaction.title = title;
         transaction.amount = amount;
         transaction.date = date;
+        transaction.note = note;
         const transEnt = await transRepo.create(transaction);
         const user = await userRepo.findOne(userId);
         transEnt.user = user;
