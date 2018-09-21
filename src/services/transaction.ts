@@ -40,7 +40,7 @@ class TransactionService {
         return await repo.findOne(id, { relations: ["user", "month", "category"] });
     }
 
-    public async updateTransaction(id: string, title: string, amount: number, date: number, catId: string) {
+    public async updateTransaction(id: string, title: string, amount: number, date: number, catId: string, note: string) {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         let tr = await repo.findOne(id, { relations: ["user", "month", "month.transactions", "category"] });
         if (amount) {
@@ -59,6 +59,9 @@ class TransactionService {
         }
         if (catId) {
             tr.category.id = (await this.getCategory(catId)).id;
+        }
+        if (note) {
+            tr.note = note;
         }
         return await repo.save(tr);
     }

@@ -16,13 +16,8 @@ export class TransactionController implements IController {
     }
 
     private async createTransaction(req: Request, res: Response): Promise<void> {
-        const transaction = await transactionService.
-            createTransaction(req.body.title,
-                +req.body.amount,
-                req.body.date,
-                req.user.id,
-                +req.body.categoryId,
-                req.body.note);
+        const { title, amount, date, categoryId, note } = req.body
+        const transaction = await transactionService.createTransaction(title, amount, date, req.user.id, +categoryId, note);
         res.status(201).json(transaction);
     }
     private async getOneById(req: Request, res: Response): Promise<void> {
@@ -31,8 +26,8 @@ export class TransactionController implements IController {
     }
 
     private async update(req: Request, res: Response) {
-        const { title, amount, categoryId, date } = req.body;
-        const edit = await transactionService.updateTransaction(req.params.id, title, +amount, date, categoryId);
+        const { title, amount, categoryId, date, note } = req.body;
+        const edit = await transactionService.updateTransaction(req.params.id, title, +amount, date, categoryId, note);
         res.json(edit);
     }
 
