@@ -12,6 +12,15 @@ export class AuthController implements IController {
     }
     private async login(req: Request, res: Response): Promise<void> {
         const user: User = await userService.findOneByUsername(req.body.username);
+        if (!req.body.password) {
+            res.status(400).json({
+                msg: "Bad request"
+            });
+        } else if (!user) {
+            res.status(400).json({
+                msg: "Can't find user"
+            })
+        }
         if (userService.passwordMatch(req.body.password, user.password)) {
             const payload = { id: user.id };
             const token = jwt.sign(payload, "secret");
