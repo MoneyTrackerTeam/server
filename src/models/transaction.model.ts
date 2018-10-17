@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Category } from "./category";
-import { Month } from "./month";
-import { User } from "./user";
+import { Category } from "./category.model";
+import { Month } from "./month.model";
+import { User } from "./user.model";
 @Entity("transactions")
 export class Transaction {
     @PrimaryGeneratedColumn()

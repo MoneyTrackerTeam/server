@@ -1,5 +1,5 @@
 import { DatabaseProvider } from "../database";
-import { Category } from "../models/category";
+import { Category } from "../models/category.model";
 
 class CategoryService {
     public async list(): Promise<Category[]> {

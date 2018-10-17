@@ -1,11 +1,11 @@
 import Defaults from "../config";
 import { DatabaseProvider } from "../database";
-import { Category } from "../models/category";
-import { Month } from "../models/month";
-import { Transaction } from "../models/transaction";
-import { User } from "../models/user";
-import { categoryService } from "./category";
-import { monthService } from "./month";
+import { Category } from "../models/category.model";
+import { Month } from "../models/month.model";
+import { Transaction } from "../models/transaction.model";
+import { User } from "../models/user.model";
+import { categoryService } from "./category.service";
+import { monthService } from "./month.service";
 
 class TransactionService {
     public async list(): Promise<Transaction[]> {

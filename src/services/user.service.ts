@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
 import { FindOneOptions } from "typeorm";
 import { DatabaseProvider } from "../database";
-import { User } from "../models/user";
+import { User } from "../models/user.model";
 
 class UserService {
     public async list(): Promise<User[]> {

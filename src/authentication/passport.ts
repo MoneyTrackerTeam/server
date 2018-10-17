@@ -1,7 +1,7 @@
 import passport = require("passport");
 import { ExtractJwt, Strategy, StrategyOptions } from "passport-jwt";
-import { User } from "../models/user";
-import { userService } from "../services/user";
+import { User } from "../models/user.model";
+import { userService } from "../services/user.service";
 const jwtOptions: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: "secret",

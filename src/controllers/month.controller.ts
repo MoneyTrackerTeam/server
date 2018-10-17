@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { FindManyOptions } from "typeorm";
-import { Month } from "../models/month";
+import { Month } from "../models/month.model";
 import { IHttpServer } from "../server/httpServer";
-import { monthService } from "../services/month";
-import { IController } from "./controller";
+import { monthService } from "../services/month.service";
+import { IController } from "./controller.controller";
 
 export class MonthController implements IController {
     public initialize(httpServer: IHttpServer) {

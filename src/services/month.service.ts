@@ -1,6 +1,6 @@
 import { FindManyOptions } from "typeorm";
 import { DatabaseProvider } from "../database";
-import { Month } from "../models/month";
+import { Month } from "../models/month.model";
 
 class MonthService {
     public async list(query?: FindManyOptions<Month>): Promise<Month[]> {

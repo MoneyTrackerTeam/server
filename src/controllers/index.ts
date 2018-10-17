@@ -1,9 +1,9 @@
-import { AuthController } from "./authentication";
-import { CategoriesController } from "./categories";
-import { LogsController } from "./logs";
-import { MonthController } from "./month";
-import { TransactionController } from "./transaction";
-import { UserController } from "./users";
+import { AuthController } from "./authentication.controller";
+import { CategoriesController } from "./categories.controller";
+import { LogsController } from "./logs.controller";
+import { MonthController } from "./month.controller";
+import { TransactionController } from "./transaction.controller";
+import { UserController } from "./users.controller";
 export const CONTROLLERS = [
     new UserController(),
     new AuthController(),
