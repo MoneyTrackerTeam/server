@@ -4,6 +4,7 @@ import * as express from "express";
 import passport from "../authentication/passport";
 import { CONTROLLERS } from "../controllers";
 import { IHttpServer } from "./httpServer";
+import { AppError } from "../common/errors";
 export class ApiServer implements IHttpServer {
     private app: express.Application;
     public get(url: string, requestHandler: express.RequestHandler, pub?: boolean): void {
@@ -39,8 +40,9 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    console.log(e);
-                    res.status(500).json(e);
+                    res.status(500).json({
+                        error: e.message,
+                    });
                 }
             });
         } else {
@@ -48,8 +50,13 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    console.log(e);
-                    res.status(500).json(e);
+                    res.status(500).json({
+                        success: false,
+                        error: {
+                            message: e.message,
+                            stack: e.stack,
+                        }
+                    });
                 }
             });
         }

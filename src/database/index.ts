@@ -1,7 +1,9 @@
 import { Db, MongoClient } from "mongodb";
 import { Connection, createConnection } from "typeorm";
-import { TransactionEntity } from "../entities/transaction";
-import { UserEntity } from "../entities/user";
+import { Category } from "../models/category.model";
+import { Month } from "../models/month.model";
+import { Transaction } from "../models/transaction.model";
+import { User } from "../models/user.model";
 export interface IDatabaseConfiguration {
     type: "postgres";
     host: string;
@@ -30,7 +32,7 @@ export class DatabaseProvider {
             username,
             password,
             database,
-            entities: [UserEntity, TransactionEntity],
+            entities: [User, Transaction, Month, Category],
             synchronize: true,
         });
         return DatabaseProvider.connection;
@@ -51,12 +53,8 @@ export class MongoProvider {
         if (MongoProvider.db) {
             return MongoProvider.db;
         }
-        try {
-            const connection = await MongoClient.connect(this.config.url);
-            this.db = await connection.db();
-            return this.db;
-        } catch (e) {
-            console.log(e);
-        }
+        const connection = await MongoClient.connect(this.config.url);
+        this.db = await connection.db();
+        return this.db;
     }
 }
