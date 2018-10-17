@@ -4,6 +4,7 @@ import * as express from "express";
 import passport from "../authentication/passport";
 import { CONTROLLERS } from "../controllers";
 import { IHttpServer } from "./httpServer";
+import { AppError } from "../common/errors";
 export class ApiServer implements IHttpServer {
     private app: express.Application;
     public get(url: string, requestHandler: express.RequestHandler, pub?: boolean): void {
@@ -41,9 +42,8 @@ export class ApiServer implements IHttpServer {
                 } catch (e) {
                     res.status(500).json({
                         msg: "Unhandled error occured",
-                        error: e,
+                        error: e.message,
                     });
-                    console.log(e);
                 }
             });
         } else {

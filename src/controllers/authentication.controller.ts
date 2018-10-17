@@ -4,6 +4,7 @@ import { User } from "../models/user.model";
 import { IHttpServer } from "../server/httpServer";
 import { userService } from "../services/user.service";
 import { IController } from "./controller.controller";
+import { UserForm } from "../forms/user.form";
 
 export class AuthController implements IController {
     public initialize(httpServer: IHttpServer) {
@@ -11,16 +12,9 @@ export class AuthController implements IController {
 
     }
     private async login(req: Request, res: Response): Promise<void> {
+        const userForm = new UserForm(req.body);
+        userForm.validateExistingUserForLogin();
         const user: User = await userService.findOneByUsername(req.body.username);
-        if (!req.body.password) {
-            res.status(400).json({
-                msg: "Bad request"
-            });
-        } else if (!user) {
-            res.status(400).json({
-                msg: "Can't find user"
-            })
-        }
         if (userService.passwordMatch(req.body.password, user.password)) {
             const payload = { id: user.id };
             const token = jwt.sign(payload, "secret");
@@ -28,9 +22,7 @@ export class AuthController implements IController {
                 accessToken: token,
             });
         } else {
-            res.status(401).json({
-                msg: "Invalid credentials",
-            });
+            console.log("bad stuff");
         }
     }
 }
