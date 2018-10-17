@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { categoryService } from "../services/category.service";
 import { IController } from "./controller.controller";
+import { CategoryForm } from "../forms/category.form";
 
 export class CategoriesController implements IController {
     public initialize(httpServer: IHttpServer) {
@@ -15,7 +16,9 @@ export class CategoriesController implements IController {
     }
 
     private async create(req: Request, res: Response): Promise<void> {
-        const c = await categoryService.create(req.body.name);
+        const categoryForm: CategoryForm = new CategoryForm(req.body);
+        categoryForm.validate();
+        const c = await categoryService.create(categoryForm);
         res.status(201).json(c);
     }
     private async getOneById(req: Request, res: Response): Promise<void> {
