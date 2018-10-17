@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { userService } from "../services/user.service";
 import { IController } from "./controller.controller";
+import { UserForm } from "../forms/user.form";
 
 export class UserController implements IController {
     public initialize(httpServer: IHttpServer) {
@@ -14,7 +15,9 @@ export class UserController implements IController {
     }
 
     private async createNewUser(req: Request, res: Response): Promise<void> {
-        const newUser = await userService.createNewUser(req.body.username, req.body.name, req.body.password);
+        const userForm = new UserForm(req.body);
+        userForm.validateNewUser();
+        const newUser = await userService.createNewUser(userForm);
         res.status(200).json(newUser);
     }
 }

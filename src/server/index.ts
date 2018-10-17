@@ -4,7 +4,6 @@ import * as express from "express";
 import passport from "../authentication/passport";
 import { CONTROLLERS } from "../controllers";
 import { IHttpServer } from "./httpServer";
-import { AppError } from "../common/errors";
 export class ApiServer implements IHttpServer {
     private app: express.Application;
     public get(url: string, requestHandler: express.RequestHandler, pub?: boolean): void {
@@ -40,9 +39,7 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    res.status(500).json({
-                        error: e.message,
-                    });
+                    this.respondWithError(e, res)
                 }
             });
         } else {
@@ -50,17 +47,17 @@ export class ApiServer implements IHttpServer {
                 try {
                     await requestHandler(req, res, next);
                 } catch (e) {
-                    res.status(500).json({
-                        success: false,
-                        error: {
-                            message: e.message,
-                            stack: e.stack,
-                        }
-                    });
+                    this.respondWithError(e, res)
                 }
             });
         }
-
         console.log(`Added route ${method.toUpperCase()} ${url}`);
+    }
+    private respondWithError(e, res: express.Response) {
+        const status = e.status || 500;
+        res.status(status).json({
+            success: false,
+            error: e.message
+        })
     }
 }

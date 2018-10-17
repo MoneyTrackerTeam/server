@@ -29,8 +29,13 @@ export class UserForm {
 
     validateExistingUserForLogin() {
         this.validateUsername();
-        this.validateName();
         this.validatePassword();
+    }
+
+    validateNewUser() {
+        this.validateUsername();
+        this.validatePassword();
+        this.validateName();
     }
 
 }
