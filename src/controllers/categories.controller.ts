@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { categoryService } from "../services/category.service";
-import { IController } from "./controller.controller";
+import { IController } from "./controller";
 import { CategoryForm } from "../forms/category.form";
 
 export class CategoriesController implements IController {

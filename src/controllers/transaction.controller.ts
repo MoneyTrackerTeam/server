@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { transactionService } from "../services/transaction.service";
-import { IController } from "./controller.controller";
+import { IController } from "./controller";
 
 export class TransactionController implements IController {
     public initialize(httpServer: IHttpServer) {

@@ -3,7 +3,7 @@ import { FindManyOptions } from "typeorm";
 import { Month } from "../models/month.model";
 import { IHttpServer } from "../server/httpServer";
 import { monthService } from "../services/month.service";
-import { IController } from "./controller.controller";
+import { IController } from "./controller";
 
 export class MonthController implements IController {
     public initialize(httpServer: IHttpServer) {

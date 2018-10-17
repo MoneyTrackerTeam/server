@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { userService } from "../services/user.service";
-import { IController } from "./controller.controller";
+import { IController } from "./controller";
 import { UserForm } from "../forms/user.form";
 
 export class UserController implements IController {

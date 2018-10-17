@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IHttpServer } from "../server/httpServer";
 import { logService } from "../services/log.service";
-import { IController } from "./controller.controller";
+import { IController } from "./controller";
 
 export class LogsController implements IController {
     public initialize(httpServer: IHttpServer) {
