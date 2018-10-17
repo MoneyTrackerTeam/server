@@ -41,7 +41,6 @@ export class ApiServer implements IHttpServer {
                     await requestHandler(req, res, next);
                 } catch (e) {
                     res.status(500).json({
-                        msg: "Unhandled error occured",
                         error: e.message,
                     });
                 }

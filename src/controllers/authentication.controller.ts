@@ -5,6 +5,7 @@ import { IHttpServer } from "../server/httpServer";
 import { userService } from "../services/user.service";
 import { IController } from "./controller.controller";
 import { UserForm } from "../forms/user.form";
+import { InvalidCredentialsError } from "../common/user.errors";
 
 export class AuthController implements IController {
     public initialize(httpServer: IHttpServer) {
@@ -22,7 +23,7 @@ export class AuthController implements IController {
                 accessToken: token,
             });
         } else {
-            console.log("bad stuff");
+            throw new InvalidCredentialsError()
         }
     }
 }
