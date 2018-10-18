@@ -19,14 +19,14 @@ class TransactionService {
         const userRepo = (await DatabaseProvider.getConnection()).getRepository(User);
         const transaction = new Transaction();
         transaction.title = form.title;
-        transaction.amount = form.amount;
+        transaction.amount = +form.amount;
         transaction.date = form.date;
         transaction.note = form.note;
         const transEnt = await transRepo.create(transaction);
         const user = await userRepo.findOne(userId);
         transEnt.user = user;
         transEnt.month = await this.getMonth(form.date);
-        await monthService.incrementMonth(transEnt.month, form.amount);
+        await monthService.incrementMonth(transEnt.month, +form.amount);
         transEnt.category = await this.getCategory(form.categoryId);
         return await transRepo.save(transEnt);
     }
@@ -39,8 +39,8 @@ class TransactionService {
     public async updateTransaction(id: string, form: TransactionForm) {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Transaction);
         let tr = await repo.findOne(id, { relations: ["user", "month", "month.transactions", "category"] });
-        if (form.amount) {
-            tr.amount = form.amount;
+        if (+form.amount) {
+            tr.amount = +form.amount;
         }
         if (form.title) {
             tr.title = form.title;
@@ -50,8 +50,8 @@ class TransactionService {
             const month = tr.month;
             tr.month = await this.getMonth(form.date);
             tr = await repo.save(tr);
-            await monthService.decrementMonth(month.id, form.amount);
-            await monthService.incrementMonth(tr.month, form.amount);
+            await monthService.decrementMonth(month.id, +form.amount);
+            await monthService.incrementMonth(tr.month, +form.amount);
         }
         if (form.categoryId) {
             tr.category.id = (await this.getCategory(form.categoryId)).id;

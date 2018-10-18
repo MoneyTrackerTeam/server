@@ -44,10 +44,10 @@ class MonthService {
     public async decrementMonth(id: number, value): Promise<Month> {
         const repo = (await DatabaseProvider.getConnection()).getRepository(Month);
         const month = await repo.findOne(id, { relations: ["transactions"] });
-        month.spent = month.spent - value;
         if (month.transactions.length === 0) {
             return await this.deleteMonth(month);
         }
+        month.spent = month.spent - value;
         return await repo.save(month);
     }
 
